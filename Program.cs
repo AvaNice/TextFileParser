@@ -1,17 +1,24 @@
 ﻿using System;
+using System.Text;
 
 namespace TextFileParser
 {
     class Program
     {
-        private static readonly TextParserApp _app = new TextParserApp();
-
 
         static void Main(string[] args)
         {
+            RunMode runMode;
+            FileWorker fileWorker = new FileWorker();
+            TextParserUI userInterface = new TextParserUI();
+            TextParserApp app = new TextParserApp(fileWorker);
+            
             try
             {
-                _app.Start();
+                runMode = userInterface.GetUserMode();
+
+
+                app.Start();
             }
             catch (Exception ex)
             {

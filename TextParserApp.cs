@@ -4,40 +4,35 @@ namespace TextFileParser
 {
     class TextParserApp
     {
-        private readonly FileWorker fileWorker = new FileWorker();
-        private readonly TextParserUI UI = new TextParserUI();
-
-        public void Start()
+       
+        public TextParserApp(FileWorker fileWorker)
         {
 
-            RunMode(UI.GetUserMode());
-
-            Start();
         }
 
-        private void RunMode(UserMode userMode)
+        public void Start(RunMode runMode, string path, string line, string newLine = null)
         {
-            switch (userMode)
+            switch (runMode)
             {
-                case UserMode.CountLine:
+                case TextFileParser.RunMode.CountLine:
 
-                    string pathForCount = UI.GetUserPath();
-                    string desiredLine = UI.GetUserParameter(TextMessages.DESIRED_LINE);
-                    int entries = CountLine(pathForCount, desiredLine);
+                     path = userInterface.GetUserPath();
+                     line = userInterface.GetUserParameter(TextMessages.DESIRED_LINE);
+                    int entries = CountLine(path, line);
 
-                    UI.ShowResult(entries.ToString(), TextMessages.ENTRIES);
+                    userInterface.ShowResult(entries.ToString(), TextMessages.ENTRIES);
 
                     break;
 
-                case UserMode.ReplaceLine:
+                case TextFileParser.RunMode.ReplaceLine:
 
-                    string pathForReplace = UI.GetUserPath();
-                    string oldline = UI.GetUserParameter(TextMessages.OLD_LINE);
-                    string newLine = UI.GetUserParameter(TextMessages.NEW_LINE);
+                    path = userInterface.GetUserPath();
+                    line = userInterface.GetUserParameter(TextMessages.OLD_LINE);
+                    newLine = userInterface.GetUserParameter(TextMessages.NEW_LINE);
 
-                    ReplaceLine(pathForReplace, oldline, newLine);
+                    ReplaceLine(path, line, newLine);
 
-                    UI.ShowResult("Jobs done");
+                    userInterface.ShowResult("Jobs done");
 
                     break;
 
@@ -47,8 +42,11 @@ namespace TextFileParser
 
                     break;
             }
+
+           // Start();
         }
 
+      
         public int CountLine(string path, string line)
         {
             try

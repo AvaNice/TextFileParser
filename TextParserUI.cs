@@ -5,7 +5,7 @@ namespace TextFileParser
 {
     class TextParserUI
     {
-        public UserMode GetUserMode()
+        public RunMode GetUserMode()
         {
             ShowHelp();
 
@@ -14,12 +14,10 @@ namespace TextFileParser
             switch (userInput)
             {
                 case TextMessages.COUNT_LINE_SELECT:
-                    //  Console.WriteLine("qw");
-                    return UserMode.CountLine;
+                    return RunMode.CountLine;
 
                 case TextMessages.REPLACE_LINE_SELECT:
-                    // Console.WriteLine("qw");
-                    return UserMode.ReplaceLine;
+                    return RunMode.ReplaceLine;
 
                 default:
                     //TODO log

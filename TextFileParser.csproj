@@ -43,13 +43,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FileWorker.cs" />
+    <Compile Include="..\..\FileWorkertest.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TextMessages.cs" />
     <Compile Include="TextParserApp.cs" />
     <Compile Include="TextParserUI.cs" />
-    <Compile Include="UserMode.cs" />
+    <Compile Include="RunMode.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

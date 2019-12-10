@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Text;
 
 namespace TextFileParser
 {
@@ -8,9 +9,9 @@ namespace TextFileParser
         /// Count all entries of line in file by path.
         /// </summary>
         /// <param name="path"></param>
-        /// <param name="line"></param>
+        /// <param name=" desiredLine"></param>
         /// <returns></returns>
-        public int CountLineEntries(string path, string line)
+        public int CountLineEntries(string path, string  desiredLine)
         {
             try
             {
@@ -24,7 +25,7 @@ namespace TextFileParser
                     {
                         thisLine = reader.ReadLine();
 
-                        if (thisLine == line)
+                        if (thisLine.Contains(desiredLine))
                         {
                             numberOfEntries++;
                         }
@@ -47,7 +48,7 @@ namespace TextFileParser
         /// <param name="path"></param>
         /// <param name="oldLine"></param>
         /// <param name="newLine"></param>
-        public void ReplaseLine(string path, string oldLine, string newLine)
+        public void ReplaseLine(string path, string oldLine, string newLine, char[] separator = null)
         {
             try
             {
@@ -68,14 +69,24 @@ namespace TextFileParser
                 {
                     thisLine = reader.ReadLine();
 
-                    if (thisLine == oldLine)
+                    if (thisLine.Contains(thisLine))
                     {
-                        writer.WriteLine(newLine);
+                        if (separator != null)
+                        {
+                            writer.WriteLine(ReplaseWords(separator, thisLine, oldLine, newLine));
+                        }
+                        else
+                        {
+                            thisLine = thisLine.Replace(oldLine, newLine);
+
+                            writer.WriteLine(thisLine);
+                        }
                     }
                     else
                     {
                         writer.WriteLine(thisLine);
                     }
+
                 }
 
                 reader.Close();
@@ -91,5 +102,32 @@ namespace TextFileParser
                 throw ex;
             }
         }
+
+        private string ReplaseWords(char[] separator,string line, string oldValue, string newValue)
+        {
+            StringBuilder result = new StringBuilder();
+
+            string separators = separator.ToString();
+
+
+
+
+            //string[] splitedLine = line.Split(separator);
+
+            //foreach (string word in splitedLine)
+            //{
+            //    if(word == oldValue)
+            //    {
+            //        result.Append(newValue);
+            //    }
+            //    else
+            //    {
+            //        result.Append(word);
+            //    }
+            //}
+
+            return result.ToString();
+        }
+      
     }
 }
