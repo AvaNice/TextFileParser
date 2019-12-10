@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Serilog;
+using System;
 using System.IO;
 
 namespace TextFileParser
@@ -14,15 +15,14 @@ namespace TextFileParser
             switch (userInput)
             {
                 case TextMessages.COUNT_LINE_SELECT:
-                    //  Console.WriteLine("qw");
                     return UserMode.CountLine;
 
                 case TextMessages.REPLACE_LINE_SELECT:
-                    // Console.WriteLine("qw");
                     return UserMode.ReplaceLine;
 
                 default:
-                    //TODO log
+                    Log.Logger.Information($"UI.Default({userInput})");
+
                     return GetUserMode();
             }
         }
@@ -63,6 +63,36 @@ namespace TextFileParser
             }
 
             Console.WriteLine("\n" + new string('-', 50));
+        }
+
+        public bool IsOneMore()
+        {
+            string input;
+            bool result;
+
+            Console.WriteLine(TextMessages.NEED_MORE);
+            input = Console.ReadLine();
+
+            switch (input.ToLower())
+            {
+                case TextMessages.YES:
+                case TextMessages.YES_SECOND:
+                    result = true;
+                    break;
+
+                case TextMessages.NO:
+                case TextMessages.NO_SECOND:
+                    result = false;
+                    break;
+
+                default:
+                    Log.Logger.Information($"UI default. User input {input}");
+                    Console.WriteLine(TextMessages.CANT_READ_MODE);
+
+                    return IsOneMore();
+            }
+
+            return result;
         }
     }
 }

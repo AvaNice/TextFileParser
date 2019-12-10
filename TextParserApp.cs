@@ -1,18 +1,21 @@
-﻿using System.IO;
+﻿using Serilog;
+using System.IO;
 
 namespace TextFileParser
 {
     class TextParserApp
     {
         private readonly FileWorker fileWorker = new FileWorker();
-        private readonly TextParserUI UI = new TextParserUI();
+        private readonly TextParserUI userInterface = new TextParserUI();
 
         public void Start()
         {
+            RunMode(userInterface.GetUserMode());
 
-            RunMode(UI.GetUserMode());
-
-            Start();
+            if(userInterface.IsOneMore())
+            {
+                Start();
+            }
         }
 
         private void RunMode(UserMode userMode)
@@ -20,31 +23,24 @@ namespace TextFileParser
             switch (userMode)
             {
                 case UserMode.CountLine:
-
-                    string pathForCount = UI.GetUserPath();
-                    string desiredLine = UI.GetUserParameter(TextMessages.DESIRED_LINE);
+                    string pathForCount = userInterface.GetUserPath();
+                    string desiredLine = userInterface.GetUserParameter(TextMessages.DESIRED_LINE);
                     int entries = CountLine(pathForCount, desiredLine);
 
-                    UI.ShowResult(entries.ToString(), TextMessages.ENTRIES);
-
+                    userInterface.ShowResult(entries.ToString(), TextMessages.ENTRIES);
                     break;
 
                 case UserMode.ReplaceLine:
-
-                    string pathForReplace = UI.GetUserPath();
-                    string oldline = UI.GetUserParameter(TextMessages.OLD_LINE);
-                    string newLine = UI.GetUserParameter(TextMessages.NEW_LINE);
+                    string pathForReplace = userInterface.GetUserPath();
+                    string oldline = userInterface.GetUserParameter(TextMessages.OLD_LINE);
+                    string newLine = userInterface.GetUserParameter(TextMessages.NEW_LINE);
 
                     ReplaceLine(pathForReplace, oldline, newLine);
-
-                    UI.ShowResult("Jobs done");
-
+                    userInterface.ShowResult("Jobs done");
                     break;
 
                 default:
-
-                    //TODO log
-
+                    Log.Logger.Information($"TextParserApp.RunMode({userMode}) Default");
                     break;
             }
         }
@@ -58,7 +54,7 @@ namespace TextFileParser
 
             catch (IOException ex)
             {
-                //TODO log
+                Log.Logger.Error($"{ex.Message} TextParserApp.CountLine");
                 throw;
             }
         }
@@ -71,7 +67,7 @@ namespace TextFileParser
             }
             catch (IOException ex)
             {
-                //TODO log
+                Log.Logger.Error($"{ex.Message} TextParserApp.ReplaceLine");
                 throw;
             }
         }
