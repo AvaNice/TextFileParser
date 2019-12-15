@@ -3,17 +3,17 @@ using System;
 
 namespace TextFileParser
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
-            TextParserApp _app = new TextParserApp();
+            TextParserApp app = new TextParserApp();
             Log.Logger = new LoggerConfiguration().MinimumLevel.Debug()
                .WriteTo.File("log.txt").CreateLogger();
 
             try
             {
-                _app.Start();
+                app.Start();
             }
             catch (Exception ex)
             {

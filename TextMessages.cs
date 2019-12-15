@@ -1,6 +1,6 @@
 ﻿namespace TextFileParser
 {
-    static class TextMessages
+    public static class TextMessages
     {
         public const string COUNT_LINE_SELECT = "1";
         public const string REPLACE_LINE_SELECT = "2";

@@ -1,8 +1,9 @@
-﻿using System.IO;
+﻿using Serilog;
+using System.IO;
 
 namespace TextFileParser
 {
-    class FileWorker
+    public class FileWorker
     {
         /// <summary>
         /// Count all entries of line in file by path.
@@ -14,7 +15,6 @@ namespace TextFileParser
         {
             try
             {
-
                 using (StreamReader reader = new StreamReader(path))
                 {
                     string thisLine = string.Empty;
@@ -32,11 +32,11 @@ namespace TextFileParser
 
                     return numberOfEntries;
                 }
-
             }
             catch (IOException ex)
             {
-                //TODO log
+                Log.Logger.Error($"{ex.Message} FileWorker.CountLineEntries");
+
                 throw ex;
             }
         }
@@ -77,7 +77,6 @@ namespace TextFileParser
                         writer.WriteLine(thisLine);
                     }
                 }
-
                 reader.Close();
                 writer.Close();
 
@@ -87,7 +86,8 @@ namespace TextFileParser
             }
             catch (IOException ex)
             {
-                //TODO log
+                Log.Logger.Error($"{ex.Message} FileWorker.ReplaseLine");
+
                 throw ex;
             }
         }

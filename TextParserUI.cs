@@ -4,7 +4,7 @@ using System.IO;
 
 namespace TextFileParser
 {
-    class TextParserUI
+    public class TextParserUI
     {
         public UserMode GetUserMode()
         {

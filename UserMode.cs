@@ -1,6 +1,6 @@
 ﻿namespace TextFileParser
 {
-    enum UserMode
+    public enum UserMode
     {
         CountLine,
         ReplaceLine
