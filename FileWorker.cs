@@ -24,9 +24,13 @@ namespace TextFileParser
                     {
                         thisLine = reader.ReadLine();
 
-                        if (thisLine == line)
+                        while (thisLine.Contains(line))
                         {
                             numberOfEntries++;
+                            
+                            int buff = thisLine.IndexOf(line);
+
+                            thisLine = thisLine.Remove(0, buff + line.Length);
                         }
                     }
 
@@ -37,7 +41,7 @@ namespace TextFileParser
             {
                 Log.Logger.Error($"{ex.Message} FileWorker.CountLineEntries");
 
-                throw ex;
+                throw;
             }
         }
 
@@ -68,9 +72,11 @@ namespace TextFileParser
                 {
                     thisLine = reader.ReadLine();
 
-                    if (thisLine == oldLine)
+                    if (thisLine.Contains(oldLine))
                     {
-                        writer.WriteLine(newLine);
+                        thisLine = thisLine.Replace(oldLine, newLine);
+
+                        writer.WriteLine(thisLine);
                     }
                     else
                     {
